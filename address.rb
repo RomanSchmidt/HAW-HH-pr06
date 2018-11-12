@@ -3,7 +3,6 @@ require './partner'
 
 # Author: Roman Schmidt, Daniel Osterholz
 #
-# Includes Unique model.
 # Has a hash method to be comparable in hash.
 # Has a eql? method which is defined as an synonym for == to make objects comparable.
 # Has an each_partner method to to iterate over all partners that have this address.
@@ -70,6 +69,7 @@ class Address
   def add_partner(partner)
     raise(ArgumentError, 'partner is not instance of Partner') unless partner.is_a? Partner
     @registered_partners.add(partner)
+    self
   end
 
   def hash

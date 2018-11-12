@@ -3,7 +3,6 @@ require 'set'
 
 # Author: Roman Schmidt, Daniel Osterholz
 #
-# Includes Unique model.
 # Has a hash method to be comparable in hash.
 # Has a eql? method which is defined as an synonym for == to make objects comparable.
 # Has a space ship operator to be comparable
@@ -61,6 +60,7 @@ class Partner
     raise(ArgumentError, 'address is not instance of Address') unless address.is_a? Address
     raise(ArgumentError, 'new Address does not include this customer') unless address.include_partner?(self)
     @address = address
+    self
   end
 
   def hash
