@@ -46,11 +46,13 @@ class Address
     @city = city_cleaned
     @country = country_cleaned
 
-    @partner = partner.nil? ? Partner.new(partner_first_name, partner_last_name, self) : partner
-    @registered_partners = []
+    new_partner = partner.nil? ? Partner.new(partner_first_name, partner_last_name, self) : partner
+    @registered_partners = Set.new
 
     if partner.nil? == false && partner.address
       partner.address.move_partner(partner, self)
+    else
+      @registered_partners.add(new_partner)
     end
   end
 
@@ -62,12 +64,12 @@ class Address
   end
 
   def succ
-    Address.new(@street, @house_no, @zip.next, @city, @country, @partner)
+    Address.new(@street, @house_no, @zip.next, @city, @country, nil, @registered_partners[0].first_name, @registered_partners[0].last_name)
   end
 
   def add_partner(partner)
     raise(ArgumentError, 'partner is not instance of Partner') unless partner.is_a? Partner
-    @registered_partners.push(partner)
+    @registered_partners.add(partner)
   end
 
   def hash
@@ -111,13 +113,17 @@ class Address
     @registered_partners.size
   end
 
+  def to_s
+    {street: @street, house_no: @house_no, zip: @zip, city: @city, country: @country, parnter_size: size_partners}.to_s
+  end
+
   private
 
   def remove_partner(partner)
-    # Laut Definition von 1 zu 1* Beziehung wist die folgende if Bedingung notwendig aber in der Praxis eher hinderlich.
-    if @registered_partners.size == 1
-      raise(ArgumentError, 'Last element of partners can not be removed.')
-    end
+    # Laut Definition von 1 zu 1* Beziehung ist die folgende if Bedingung notwendig aber in der Praxis eher hinderlich.
+    #if @registered_partners.size == 1
+    #  raise(ArgumentError, 'Last element of partners can not be removed.')
+    #end
 
     @registered_partners.delete(partner)
   end

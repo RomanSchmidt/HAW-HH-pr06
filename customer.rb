@@ -24,7 +24,7 @@ class Customer < Partner
 
   def eql?(other)
     return nil unless other.is_a? Customer
-    other.birthday == @birthday
+    super(other) && other.birthday == @birthday
   end
 
   alias_method(:==, :eql?)

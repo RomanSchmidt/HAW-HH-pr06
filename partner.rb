@@ -9,6 +9,7 @@ require 'set'
 # Has a space ship operator to be comparable
 # Has a succ method to be range compatible
 class Partner
+  include Comparable
 
   def initialize(first_name, last_name, address = nil, street = nil, house_no = nil, zip = nil, city = nil, country = nil)
     raise(ArgumentError, 'first_name is not a string') unless first_name.is_a? String
@@ -35,9 +36,14 @@ class Partner
 
   def <=>(other)
     return nil unless other.is_a? Partner
-    first_level = @first_name <=> other.first_name
+    first_level = @last_name <=> other.last_name
     return first_level if first_level == 1 || first_level == -1
-    @last_name <=> other.last_name
+
+    puts 'space shit'
+    puts @first_name
+    puts other.first_name
+    puts first_level
+    @first_name <=> other.first_name
   end
 
   def succ
@@ -61,5 +67,9 @@ class Partner
     prime = 31
     (prime + (@first_name.nil? ? 0 : @first_name.hash)) *
         (prime + (@last_name.nil? ? 0 : @last_name.hash))
+  end
+
+  def to_s
+    {first_name: @first_name, last_name: @last_name, address: @address.to_s}.to_s
   end
 end
