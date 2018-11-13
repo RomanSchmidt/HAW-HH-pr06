@@ -98,6 +98,23 @@ class Address
     self
   end
 
+  def get_partner_sorted(*several_variants)
+    new_partner_array = @registered_partners.sort(*several_variants)
+    new_partner_array.to_a
+  end
+
+  def get_partner_min(*several_variants)
+    @registered_partners.min(*several_variants)
+  end
+
+  def get_partner_max(*several_variants)
+    @registered_partners.max(*several_variants)
+  end
+
+  def get_partner
+    @registered_partners.to_a
+  end
+
   def move_partner(partner, new_address)
     remove_partner(partner)
     new_address.add_partner(partner)

@@ -92,6 +92,15 @@ class AddressTest < Test::Unit::TestCase
       #assert_true(my_range.include?(address_between))
   end
 
+  def test_succ_sort_partner
+    address = Address.new(@valid_street, @valid_house_no, @valid_zip, @valid_city, @valid_country, @partner3)
+    address.add_partner(@partner1).add_partner(@partner2)
+    assert_equal(address.get_partner, [@partner3, @partner1, @partner2])
+    assert_equal(address.get_partner_sorted, [@partner1, @partner2, @partner3])
+    assert_equal(address.get_partner_min, @partner1)
+    assert_equal(address.get_partner_max, @partner3)
+  end
+
   # error tests of params
 
   def test_create_err_street_empty1

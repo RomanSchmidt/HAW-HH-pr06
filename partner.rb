@@ -37,11 +37,6 @@ class Partner
     return nil unless other.is_a? Partner
     first_level = @last_name <=> other.last_name
     return first_level if first_level == 1 || first_level == -1
-
-    puts 'space shit'
-    puts @first_name
-    puts other.first_name
-    puts first_level
     @first_name <=> other.first_name
   end
 
